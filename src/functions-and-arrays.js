@@ -103,7 +103,15 @@ function averageWordLength(words) {
 console.log(averageWordLength(wordsArr));
 
 // Bonus - Iteration #4.1
-function avg() {}
+function avg(arr) {
+  if (arr.length === 0) return null;
+
+  const sumTotal = sum(arr);
+  return sumTotal / arr.length;
+}
+
+// Test 4.1
+console.log(avg(mixedArr));
 
 // Iteration #5: Unique arrays
 const wordsUnique = [
@@ -120,16 +128,35 @@ const wordsUnique = [
   'bring'
 ];
 
-function uniquifyArray() {}
+function uniquifyArray(words) {
+  let uniqueWords = [];
 
+  for (let i = 0; i < words.length; i++){
+    if (uniqueWords.indexOf(words[i]) === -1){
+      uniqueWords.push(words[i]);
+    }
+  }
+  return uniqueWords;
+}
 
+// Test Uniquify
+console.log(uniquifyArray(wordsUnique));
 
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
-function doesWordExist() {}
+function doesWordExist(words, wordToSearch) {
+  for (let i = 0; i < words.length; i++){
+    if (words[i] === wordToSearch){
+      return true;
+    }
+  }
+  return false;
+}
 
-
+// Test word search
+console.log(doesWordExist(wordsFind, 'subset'));
+console.log(doesWordExist(wordsFind, 'Sekiro'));
 
 // Iteration #7: Count repetition
 const wordsCount = [
@@ -146,9 +173,18 @@ const wordsCount = [
   'matter'
 ];
 
-function howManyTimes() {}
+function howManyTimes(words, wordToCount) {
+  let count = 0;
+  for (let i = 0; i <words.length; i++){
+    if (words[i] === wordToCount){
+      count++;
+    }
+  }
+  return count;
+}
 
-
+// Test word count 
+console.log(howManyTimes(wordsCount, 'matter'));
 
 // Iteration #8: Bonus
 const matrix = [
@@ -174,10 +210,58 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+function greatestProduct(matrix) {
+  let maxProduct = 0;
 
+  for (let i = 0; i<matrix.length; i++){
+    for (let j =0; j<matrix[i].length; j++){
+      if (j <=matrix[i].length - 4){
+        const horizontalProduct = matrix[i][j] * matrix[i][j+1] * matrix[i][j+2] * matrix[i][j+3];
+        maxProduct = Math.max(maxProduct, horizontalProduct); 
+      }
 
+      if (i <=matrix.length - 4){
+        const verticalProduct = matrix[i][j] * matrix[i+1][j] * matrix[i+2][j] * matrix[i+3][j];
+        maxProduct = Math.max(maxProduct, verticalProduct); 
+      }
+    }
+  }
+  return maxProduct;
+}
 
+// Test greatest Product matrix
+console.log(greatestProduct(matrix));
+
+// Diagonal product
+function greatestProductOfDiagonals(matrix) {
+  let maxProduct = 0; 
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (i <= matrix.length - 4 && j <= matrix[i].length - 4) {
+        const diagonalDownProduct = 
+          matrix[i][j] * 
+          matrix[i + 1][j + 1] * 
+          matrix[i + 2][j + 2] * 
+          matrix[i + 3][j + 3];
+        maxProduct = Math.max(maxProduct, diagonalDownProduct);
+      }
+
+      if (i >= 3 && j <= matrix[i].length - 4) {
+        const diagonalUpProduct = 
+          matrix[i][j] * 
+          matrix[i - 1][j + 1] * 
+          matrix[i - 2][j + 2] * 
+          matrix[i - 3][j + 3];
+        maxProduct = Math.max(maxProduct, diagonalUpProduct);
+      }
+    }
+  }
+  return maxProduct; // Return the greatest diagonal product found
+}
+
+// Test Diagonal produvet
+console.log(greatestProductOfDiagonals(matrix));
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
